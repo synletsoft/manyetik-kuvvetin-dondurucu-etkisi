@@ -1399,16 +1399,19 @@ function or(l, r)
 self.C3_ExpressionFuncs = [
 		() => 0,
 		() => 1,
-		() => "",
-		() => 2,
 		() => 3,
+		() => "",
+		() => -100,
+		() => 2,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => v0.GetValue();
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => Math.round(C3.clamp((((f0() - 744) / 376) * 12), 0, 12));
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => f0(f1("3,5,9,12", Math.round(C3.clamp((((f2() - 744) / 376) * 3), 0, 3)), ","));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -1429,54 +1432,74 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => Math.abs(v0.GetValue());
 		},
-		() => 0.1,
+		() => 0.05,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (((v0.GetValue() + (v1.GetValue() / 6)) + 60) % 60);
+			return () => (((v0.GetValue() + (v1.GetValue() / 1.5)) + 240) % 240);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const v2 = p._GetNode(2).GetVar();
+			const f3 = p._GetNode(3).GetBoundMethod();
+			const f4 = p._GetNode(4).GetBoundMethod();
+			const f5 = p._GetNode(5).GetBoundMethod();
+			const f6 = p._GetNode(6).GetBoundMethod();
+			return () => C3.lerp(v0.GetValue(), f1(1080, (Math.abs(v2.GetValue()) / f3(f4(), 0.001))), f5(1, (f6() * 12)));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
 		},
-		() => -1,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (Math.floor(v0.GetValue()) % 60);
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => ((60 - Math.floor(v0.GetValue())) % 60);
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			return () => ((1125 + (110 * Math.cos(C3.toRadians((v0.GetValue() * 6))))) + (8 * Math.sin(C3.toRadians((v1.GetValue() * 6)))));
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			return () => ((717 - (32 * Math.cos(C3.toRadians((v0.GetValue() * 6))))) - (142 * Math.sin(C3.toRadians((v1.GetValue() * 6)))));
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (55 + (45 * Math.sin(C3.toRadians((f0() * 540)))));
+			return () => ((((v0.GetValue()) > (0) ? 1 : 0)) ? (1) : ((-1)));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
 			return () => (f0() - v1.GetValue());
 		},
-		() => 0.3,
+		() => 0.16,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => ((((v0.GetValue()) < (100) ? 1 : 0)) ? (0) : (C3.clamp((1 + Math.floor(((v1.GetValue() - 100) / 32))), 1, 11)));
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (Math.floor((v0.GetValue() / 2)) % 120);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => ((1125 + (110 * Math.cos(C3.toRadians((v0.GetValue() * 1.5))))) + (8 * Math.sin(C3.toRadians((v1.GetValue() * 1.5)))));
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => ((717 - (32 * Math.cos(C3.toRadians((v0.GetValue() * 1.5))))) - (142 * Math.sin(C3.toRadians((v1.GetValue() * 1.5)))));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (65 + (35 * Math.sin(C3.toRadians((f0() * 540)))));
+		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			const v2 = p._GetNode(2).GetVar();
-			return () => ((v0.GetValue() + (f1() * (42 + (4.5 * v2.GetValue())))) % 120);
+			return () => ((v0.GetValue() + ((f1() * 20) * v2.GetValue())) % 240);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (Math.floor(v0.GetValue()) % 120);
+			return () => (Math.floor(v0.GetValue()) % 240);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => ((((v0.GetValue()) === (3) ? 1 : 0)) ? (0) : (((((v1.GetValue()) === (5) ? 1 : 0)) ? (1) : (((((v2.GetValue()) === (9) ? 1 : 0)) ? (2) : (3))))));
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -1484,7 +1507,15 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (744 + (v0.GetValue() * (376 / 12)));
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => (744 + (((((v0.GetValue()) === (3) ? 1 : 0)) ? (0) : (((((v1.GetValue()) === (5) ? 1 : 0)) ? (1) : (((((v2.GetValue()) === (9) ? 1 : 0)) ? (2) : (3)))))) * (376 / 3)));
+		},
+		() => -1,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0(100, (30 + (v1.GetValue() * 7)));
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
